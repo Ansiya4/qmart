@@ -1,0 +1,310 @@
+{%extends 'user_view/base.html'%}
+{% load static %}
+{%block content%}
+
+<!--================Checkout Area =================-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<section class="checkout_area section_padding">
+  <style>
+    .profile {
+      background-color: #e6bde33a;
+      border: 1px none #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 0 2px 4px rgba(223, 183, 231, 0.1);
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+  </style>
+
+  <div class="container">
+    <div class="col-md-12 form-group">
+      <p style="font-size: x-large;"> Billing Details</p>
+    </div>
+    <div class="col-md-12 form-group">
+      <h6>You can edit</h6>
+    </div>
+    <div class="billing_details">
+      <div class="row">
+        <form class="row contact_form" action="{% url 'place_order' %}" method="post" novalidate="novalidate">
+          {%csrf_token%}
+          <div class="col-lg-8">
+            <div class="col-md-12 form-group">
+              <div class="profile">
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label ">
+                    <p>Full Name</p>
+                  </div>
+                  <div class="col-lg-9 col-md-8">:
+                    <input type="text" value="{{user.first_name}} {{user.last_name}}" name="name_of_person">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">
+                    <p>Phone</p>
+                  </div>
+                  <div class="col-lg-9 col-md-8">:
+                    <input type="text" value="{{user.phone_number}}" name="phone_number" required>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">
+                    <p>User Name</p>
+                  </div>
+                  <div class="col-lg-9 col-md-8">:{{user.username}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">
+                    <p>Email</p>
+                  </div>
+                  <div class="col-lg-9 col-md-8">:{{user.email}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 form-group">
+              <h6>Select Any Address</h6>
+              {% for item in address %}
+              <h5 class="card-title"></h5>
+              <div class="profile">
+              <div class="row">
+                <div class="col-lg-11 col-md-8">
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">
+                        <p>House:</p>
+                      </div>
+                      <div class="col-lg-9 col-md-8">:{{item.house}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">
+                        <p>City:</p>
+                      </div>
+                      <div class="col-lg-9 col-md-8">:{{item.city}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">
+                        <p>State:</p>
+                      </div>
+                      <div class="col-lg-9 col-md-8">:{{item.state}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">
+                        <p>Country:</p>
+                      </div>
+                      <div class="col-lg-9 col-md-8">:{{item.country}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">
+                        <p>Zip:</p>
+                      </div>
+                      <div class="col-lg-9 col-md-8">:{{item.pin}}
+                      </div>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-4 label">
+                  <input required type="radio" name="address" id="" value="{{item.id}}">
+                </div>
+              </div>
+            </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="order_box">
+              <h2>Your Order</h2>
+              <ul class="list">
+                <li>
+                  <a href="#">Product
+                    <span>Total</span>
+                  </a>
+                </li>
+                {% for item in cart %}
+                <li>
+                  <a href="#" style="text-decoration: none">{{item.product}}
+                    <span class="middle">{{item.price}}x{{item.quantity}}</span>
+                    <span class="last">₹{{item.get_subtotal}}</span>
+                  </a>
+                </li>
+                {%endfor%}
+              </ul>
+              {%if cart %}
+              <ul class="list list_2">
+                <li>
+                  <a href="#" style="text-decoration: none">Subtotal
+                    <span>₹{{totalsum}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" style="text-decoration: none">Shipping
+                    <span>Flat rate: ₹{{shipping_rate}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" style="text-decoration: none">GST
+                    <span>₹{{tax}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" style="text-decoration: none">Total
+                    <span>₹{{grand_total}}</span>
+                  </a>
+                </li>
+                <li>
+                  {% for i in coupon  %}
+                    <a href="#" style="text-decoration: none">Coupon-{{i.code}}
+                      <span>₹{{i.discount}}</span>
+                      <input type="text" name="coupon" id="" value="{{i.id}}" hidden>
+                    </a>
+                    {% endfor %}
+                  </li>
+                  <li>
+                    <a href="#" style="text-decoration: none">New Total
+                      <span>₹{{new_total}}</span>
+                    </a>
+                  </li>
+                {%endif%}
+                </ul>
+                {% comment %} <!-- apply coupon button -->
+                <button type="button" class="genric-btn primary-border radius" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                  Apply coupon
+                </button> {% endcomment %}
+                <div class="payment_item">
+                  <span>Please select any payment mode</span>
+              </div>
+              <div class="payment_item active">
+                <div class="radion_btn">
+                  <input type="radio" id="paypal-option" name="mode_of_payment" value="paypal" />
+                  <label for="paypal-option">Paypal </label>
+                  <div class="check"></div>
+                </div>
+              </div>
+              <div class="payment_item active">
+                <div class="radion_btn">
+                  <input type="radio" id="cod-option" name="mode_of_payment" value="cod" />
+                  <label for="cod-option">Cash on delivery </label>
+                  <div class="check"></div>
+                </div>
+              </div>
+              <div class="creat_account">
+                <input type="checkbox" id="f-option4" name="selector" value="checked" required />
+                <label for="f-option4">I've read and accept the </label>
+                <a href="#">terms & conditions*</a>
+              </div>
+              <button type="submit" class="btn_3">Place Order</button>
+            </div>
+            <div style="margin-top: 20px">
+              <label for="f-option3">Ship to a different address?</label>
+            </div>
+            <!-- Modal button trigger to add address-->
+            <button type="button" class="btn_3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Add Address
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!--================End Checkout Area =================-->
+<!-- Modal start -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Address</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row contact_form" action="{% url 'add_address'%}" method="post" novalidate="novalidate">
+          {% csrf_token %}
+          <div class="col-md-12 form-group p_star">
+            <input type="text" class="form-control" id="add1" name="house" placeholder="House/Building:" />
+            <!-- <span class="placeholder" data-placeholder="Address line 01"></span> -->
+          </div>
+
+          <div class="col-md-12 form-group p_star">
+            <input type="text" class="form-control" id="add1" name="city" placeholder="Town/City:" />
+            <!-- <span class="placeholder" data-placeholder="Address line 01"></span> -->
+          </div>
+
+          <div class="col-md-12 form-group p_star">
+            <input type="text" class="form-control" id="add2" name="state" placeholder="State:" />
+            <!-- <span class="placeholder" data-placeholder="Address line 02"></span> -->
+          </div>
+
+          <div class="col-md-12 form-group p_star">
+            <input type="text" class="form-control" id="city" name="country" placeholder="Country:" />
+            <!-- <span class="placeholder" data-placeholder="Town/City"></span> -->
+          </div>
+
+          <div class="col-md-12 form-group">
+            <input type="text" class="form-control" id="zip" name="pin" placeholder="Postcode/ZIP:" />
+          </div>
+          <div class="col-md-12 form-group">
+            <button type="submit" class="genric-btn primary-border radius">Update</button>
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal end -->
+
+<!-- modal apply coupon -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Apply coupon</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <form class="row contact_form" action="{% url 'apply_coupon'%}" method="post" novalidate="novalidate">
+          {% comment %} action="{% url 'apply_coupon'%}" {% endcomment %}
+          {% csrf_token %}
+          <div class="col-md-12 form-group">
+            <input type="text" class="form-control" id="zip" name="pin" placeholder="Enter coupon code:" />
+          </div>
+          <div class="col-md-12 form-group">
+            <button type="submit" class="genric-btn primary-border radius">Apply Coupon</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal end -->
+{% comment %} <script>
+  function toggleTextField() {
+    var textField = document.getElementById("myTextField");
+    if (textField.style.display === "none") {
+      textField.style.display = "block";
+    } else {
+      textField.style.display = "none";
+    }
+  }
+</script> {% endcomment %}
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+  integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+  integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+{%endblock%}

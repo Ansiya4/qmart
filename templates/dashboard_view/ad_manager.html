@@ -1,0 +1,147 @@
+{%extends 'dashboard_view/base.html'%}
+{%block content%}
+<!-- <h1>haaaaaaaaaaaaaaiiiiiii</h1> -->
+<!-- General Form Elements -->
+<form method='POST' enctype="multipart/form-data" novalidate="novalidate">
+    {% csrf_token %}
+   
+    <!-- banner ads -->
+    <p>
+    <div class="row mb-3">
+      
+        <label for="inputNumber" class="col-sm-2 col-form-label">main_image </label>
+        <div class="col-sm-10">
+            <div style="width: 110px;" class="card-header category-img position-relative overflow-hidden bg-transparent border p-0 pl-2">
+                {% if main_ad.main_image %}
+                <img class="img-fluid w-100" src="{{main_ad.main_image.url}} " alt="">
+                {% endif %}
+            </div>
+            <input class="form-control"  type="file" id="formFile" accept="image/png,image/jpeg,image/jpg"
+                name="main_image">
+        </div>
+    </div>
+    </p>
+    <p>
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">main_head</label>
+        <div class="col-sm-10">
+            <input type="text" value="{{main_ad.main_head}}" class="form-control" name="main_head">
+        </div>
+    </div>
+    </p>
+    <p>
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">main_description</label>
+        <div class="col-sm-10">
+            <input type="text" value="{{main_ad.main_description}}" class="form-control" name="main_description">
+        </div>
+    </div>
+    </p>
+    <!-- banner end -->
+    <!-- first advertisement -->
+    <p>
+    <div class="row mb-3">
+        <label for="inputNumber" class="col-sm-2 col-form-label">image1</label>
+        <div class="col-sm-10">
+            <div style="width: 110px;" class="card-header category-img position-relative overflow-hidden bg-transparent border p-0 pl-2">
+                {% if main_ad.image1 %}
+                <img class="img-fluid w-100" src="{{main_ad.image1.url}} " alt="" style="height: 75px;">
+                {% endif %}
+            </div>
+            <input class="form-control" type="file" id="formFile" accept="image/png,image/jpeg,image/jpg" name="image1">
+        </div>
+    </div>
+    </p>
+    <p>
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">price1</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="price1" value = {{main_ad.price1}} >
+        </div>
+    </div>
+    </p>
+    <p>
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">description1</label>
+        <div class="col-sm-10">
+            <input type="text" value="{{main_ad.description1}}" class="form-control" name="description1">
+            <!-- <input type="text" class="form-control" name="description1" value = {{main_ad.description1}} > -->
+        </div>
+    </div>
+    </p>
+    <!-- end -->
+    <!-- second advertisement-->
+    <p>
+    <div class="row mb-3">
+        <label for="inputNumber" class="col-sm-2 col-form-label">image2</label>
+        <div class="col-sm-10">
+            <div style="width: 110px;" class="card-header category-img position-relative overflow-hidden bg-transparent border p-0 pl-2">
+                {% if main_ad.image2 %}
+                <img class="img-fluid w-100" src="{{main_ad.image2.url}} " alt="" style="height: 75px;">
+                {%endif%}
+            </div>
+            <input class="form-control" type="file" id="formFile" accept="image/png,image/jpeg,image/jpg" name="image2">
+        </div>
+    </div>
+    </p>
+    <p>
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">price2</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="price2" value = {{main_ad.price2}} >
+        </div>
+    </div>
+    </p>
+    <p>
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">description2</label>
+        <div class="col-sm-10">
+            <input type="text" value="{{main_ad.description2}}" class="form-control" name="description2">
+            <!-- <input type="text" class="form-control" name="description2" value = {{main_ad.description2}} > -->
+        </div>
+    </div>
+    </p>
+    <!-- end -->
+    <!-- third advertisement -->
+    <p>
+    <div class="row mb-3">
+        <label for="inputNumber" class="col-sm-2 col-form-label">image3</label>
+        <div class="col-sm-10">
+            <div style="width: 110px;" class="card-header category-img position-relative overflow-hidden bg-transparent border p-0 pl-2">
+                {% if main_ad.image3 %}
+                <img class="img-fluid w-100" src="{{main_ad.image3.url}} " alt="" style="height: 75px;">
+                {%endif%}
+            </div>
+            <input class="form-control" type="file" id="formFile" accept="image/png,image/jpeg,image/jpg" name="image3">
+        </div>
+    </div>
+    </p>
+    <p>
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">price3</label>
+        <div class="col-sm-10">
+            <input type="text" value="{{main_ad.price3}}" class="form-control" name="price3" >
+        </div>
+    </div>
+    </p>
+    <p>
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">description3</label>
+        <div class="col-sm-10">
+            <input type="text" value="{{main_ad.description3}}" class="form-control" name="description3">
+            <!-- <input type="text" class="form-control" name="description3" value = {{main_ad.description3}} > -->
+        </div>
+    </div>
+    </p>
+    <!-- banner end -->
+    <p>
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" href = "{%url 'ad_management'%}">Submit Form</button>
+        </div>
+    </div>
+    </p>
+
+</form><!-- End General Form Elements -->
+{%endblock%}

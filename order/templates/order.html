@@ -1,0 +1,158 @@
+{%extends 'user_view/base.html'%}
+{% load static %}
+{%block content%}
+
+
+<!--================ confirmation part start =================-->
+<section class="confirmation_part section_padding">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="confirmation_tittle">
+        <span>Thank you {{user.username}}. Your order has been received</span>
+      </div>
+    </div>
+    {% comment %} {% for ord in myoder %} {% endcomment %}
+    <div class="col-lg-6 col-lx-4">
+      <div class="single_confirmation_details">
+        <h4>order info</h4>
+        <ul>
+          <li>
+            <p>order number</p><span>: {{myoder.id}}</span>
+          </li>
+          <li>
+            <p>time</p><span>: {{myoder.time_of_order}}</span>
+          </li>
+          <li>
+            <p>total</p><span>: {{myoder.total_amount}}</span>
+          </li>
+          <li>
+            <p>payment methord</p><span>: {{myoder.mode_of_payment}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-6 col-lx-4">
+      <div class="single_confirmation_details">
+        <h4>Billing Address</h4>
+        <ul>
+          <li>
+            <p>city</p><span>: {{myoder.address.city}}</span>
+          </li>
+          <li>
+            <p>state</p><span>: {{myoder.address.state}}</span>
+          </li>
+          <li>
+            <p>country</p><span>: {{myoder.address.country}}</span>
+          </li>
+          <li>
+            <p>postcode</p><span>: {{myoder.address.pin}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-6 col-lx-4">
+      <div class="single_confirmation_details">
+        <h4>shipping Address</h4>
+        <ul>
+          <li>
+            <p>city</p><span>: {{myoder.address.city}}</span>
+          </li>
+          <li>
+            <p>state</p><span>: {{myoder.address.state}}</span>
+          </li>
+          <li>
+            <p>country</p><span>: {{myoder.address.country}}</span>
+          </li>
+          <li>
+            <p>postcode</p><span>: {{myoder.address.pin}}</span>
+          </li>
+        </ul>
+      </div>
+      {% comment %} {% endfor %} {% endcomment %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="order_details_iner">
+        <h3>Order Details</h3>
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th scope="col" colspan="2">Product</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in my_products %}
+            <tr>
+              <th colspan="2"><span>{{item.product.product_name}}</span></th>
+              <th>x{{item.product.price}}</th>
+              <th>x{{item.quantity}}</th>
+              <th>{{item.amount}}</th>
+
+            </tr>
+            {% endfor %}
+            <tr>
+              <th colspan="2">Shipping</th>
+              <th></th>
+              <th></th>
+              <th><span></span>{{shipping_rate}}</th>
+            </tr>
+            <tr>
+              <th colspan="2">Tax</th>
+              <th></th>
+              <th></th>
+              <th><span></span>{{myoder.tax}}</th>
+            </tr>
+         
+            <tr>
+              <th colspan="2">Subtotal</th>
+              <th></th>
+              <th></th>
+              <th> <span>{{myoder.total_amount}}</span></th>
+            </tr>
+            
+            {% if myoder.coupon %}
+            <tr>
+              <th colspan="2">Coupon</th>
+              <th></th>
+              <th></th>
+              <th><span></span>-{{myoder.coupon.discount}}</th>
+            </tr>
+            <tr>
+              <th colspan="2">New Total</th>
+              <th></th>
+              <th></th>
+              <th> <span>{{new_total}}</span></th>
+            </tr>
+            {% endif %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="col" colspan="4">Total:</th>
+              <th scope="col" style="color: red;">{{new_total}}</th>
+            </tr>
+          </tfoot>
+          
+        </table>
+      </div>
+    </div>
+  </div>
+<div  class="row" style="display:flex; justify-content: center; align-items: center; padding: 10px;">
+<button onclick="print()" type="button" class="genric-btn primary-border radius">Print Invoice</button>
+</div>
+</div>
+</section>
+<!-- <script>
+  // Detect back button click event
+  window.addEventListener('popstate', function(event) {
+      // Redirect to the home page
+      window.location.href = 'home/';
+  });
+</script> -->
+
+<!--================ confirmation part end =================-->
+{%endblock%}

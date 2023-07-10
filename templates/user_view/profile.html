@@ -1,0 +1,153 @@
+{%extends 'user_view/base.html'%}
+{% load static %}
+{%block content%}
+
+<section>
+	<style>
+		.profile {
+			background-color: #e6bde33a;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			padding: 10px;
+			box-shadow: 0 2px 4px rgba(223, 183, 231, 0.1);
+			font-family: Arial, sans-serif;
+			color: #333;
+		}
+	</style>
+
+	<div class="col-md-6">
+		<!-- Your content here -->
+	</div>
+
+	<!-- Start Align Area -->
+	<div class="whole-wrap pb-100">
+		<div class="container">
+			<div class="section-top-border">
+				<h3 class="mb-30">Welcome {{user.username}}</h3>
+				<div class="row">
+					<div class="col-md-4">
+						<img src="{% static 'd.jpg'%}" alt="" class="img-fluid">
+						<aside class="single_sidebar_widget post_category_widget">
+							<ul class="list cat-list">
+								<li>
+									<a href="{%url 'edit_profile'%}" class="d-flex">
+										<p>Edit Profile</p>
+								</a>
+								</li>
+								<li>
+									<a href="{% url 'wishlist'%}" class="d-flex">
+										<p>My Wishlist</p>
+									</a>
+								</li>
+								<li>
+									<a href="{% url 'cart_view'%}" class="d-flex">
+										<p>My cart</p>
+									</a>
+								</li>
+								<li>
+									<a href="{% url 'view_order'%}" class="d-flex">
+										<p>My Orders</p>
+									</a>
+								</li>
+								{% comment %} <li>
+									<a href="#" class="d-flex">
+										<p>Track Orders</p>
+									</a>
+								</li> {% endcomment %}
+								<li>
+									<a href="{% url 'address_manager' %}" class="d-flex">
+										<p>My address</p>
+									</a>
+								</li>
+								<li>
+									<a href="{% url 'resetpassword' %}" class="d-flex">
+										<p>Reset your password? </p>
+									</a>
+									{% comment %} <a class="lost_pass" href="{% url 'resetpassword' %}">Reset your password? </a> {% endcomment %}
+								</li>
+							</ul>
+						</aside>
+					</div>
+					<div class="col-md-8">
+						<div class="profile">
+						<h5 class="card-title">Profile Details</h5>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label "><p>Full Name</p> </div>
+							<div class="col-lg-9 col-md-8">:{{user.first_name}} {{user.last_name}}</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"><p>User Name</p> </div>
+							<div class="col-lg-9 col-md-8">:{{user.username}}</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"><p>Email</p> </div>
+							<div class="col-lg-9 col-md-8">:{{user.email}}</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"><p>Phone</p></div>
+							<div class="col-lg-9 col-md-8">{{user.phone_number}}</div>
+						</div>
+					</div>
+					<div class="profile">
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"><p>Address</p></div>
+						
+						{% for item in address %}
+						{% if item.is_active %}
+							<div class="col-lg-9 col-md-8">{{item.house}}</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"></div>
+							<div class="col-lg-9 col-md-8">{{item.city}}</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"></div>
+							<div class="col-lg-9 col-md-8">{{item.state}}</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"></div>
+							<div class="col-lg-9 col-md-8">{{item.country}}</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"></div>
+							<div class="col-lg-9 col-md-8">{{item.pin}}</div>
+						</div>
+						{%endif%}
+					</div>
+					
+					
+					<div class="profile">
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"> <p> Shipping Address </p></div>
+							{% if item.is_shipping %}
+							<div class="col-lg-9 col-md-8">{{item.house}}</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"></div>
+							<div class="col-lg-9 col-md-8">{{item.city}}</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"></div>
+							<div class="col-lg-9 col-md-8">{{item.state}}</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"></div>
+							<div class="col-lg-9 col-md-8">{{item.country}}</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 label"></div>
+							<div class="col-lg-9 col-md-8">{{item.pin}}</div>
+						</div>
+						{%endif%}
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</section>
+<!-- End Align Area -->
+
+
+{%endblock%}

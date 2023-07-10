@@ -1,0 +1,86 @@
+{%extends 'user_view/base.html'%}
+{%load static%}
+{%block content%}
+<section class="product_list section_padding" style="background-color: rgb(244 237 242);">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="product_sidebar">
+                    <div class="single_sedebar">
+                        <form action="{% url 'search' %}" method="GET">
+                            <input type="text" placeholder="Search keyword" name="keyword"
+                                style="background-color: #ffffff;">
+                            <i class="ti-search"></i>
+                        </form>
+                    </div>
+                    <div class="single_sedebar">
+                        <div class="select_option">
+                            <div class="select_option_list" style="background-color: #ffffff;">Category <i
+                                    class="right fas fa-caret-down"></i> </div>
+                            <div class="select_option_dropdown">
+                                <p><a href="{% url 'product_page'%}">All Products</a></p>
+                                {% for category in links %}
+                                <p><a href="{{ category.get_url }}">{{category.category_name}}</a></p>
+                                {%endfor%}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="single_sedebar">
+                        <div class="select_option">
+                            <div class="select_option_list" style="background-color: #ffffff;">Price <i
+                                    class="right fas fa-caret-down"></i> </div>
+                            <div class="select_option_dropdown">
+
+                            {% for price_range in price %}
+                                {% if category %}
+                                    {% if price_range.min_price and price_range.max_price %}
+                                    <p><a href="{% url 'price_ranges_view_with_category' category.slug price_range.min_price price_range.max_price %}">{{ price_range.min_price }} - {{ price_range.max_price }}</a></p>
+                                    {% endif %}
+                                {% else %}
+                                    {% if price_range.min_price and price_range.max_price %}
+                                    <p><a href="{% url 'price_ranges_view' price_range.min_price price_range.max_price %}">{{price_range.min_price}} - {{ price_range.max_price }}</a></p>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="product_list">
+                    <div class="row">
+                        {%for product in products_list%}
+                        <div class="col-lg-3 col-sm-3">
+                            <div class="card single_product_item">
+                                <a href="{% url 'product_details' product_id=product.id %}"><img src="{{product.image.url}}" alt="#" class="img-fluid"style="width: 300px; height: 150px;"></a>
+                                
+                                <div class="card-body">
+                                    <div style=" display: inline-block;    height: 50%;">
+                                        <h3> 
+                                            <a href="{% url 'product_details' product_id=product.id %}">{{product.product_name}}</a>
+                                        </h3>
+                                    </div>
+                                    <div style=" display: inline-block;    height: 50%;">
+                                        <p>From ₹{{product.price}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="load_more_btn text-center">
+                        <a href="#" class="btn_3">Load More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- product list part end-->
+
+{%endblock%}

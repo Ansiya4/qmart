@@ -1,0 +1,60 @@
+{%extends 'user_view/base.html'%}
+{% load static %}
+{%block content%}
+<section class="cart_area section_padding">
+    <div class="container">
+      <div class="cart_inner">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col"style="text-align: center;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in wishlist %}
+              <tr>
+                <td>
+                  <div class="media">
+                    <div class="d-flex">
+                      <img src="{{item.product.image.url}}" alt="" />
+                    </div>
+                    <div class="media-body">
+                      <p>{{item.product.product_name}}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <h5>{{item.product.price}}</h5>
+                </td>
+                 {% comment %} <td style="text-align: center;" ><a href="#" class="genric-btn primary-border radius">Add to Cart</a></td>  {% endcomment %}
+                <td>
+                <form action="{% url 'addTocart' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value={{item.product.id}} name="product_id">
+                    <button class="btn_3">add to cart</button> 
+                </form>
+            
+                </td>
+                <td class="ml-1">
+                  <form action="{% url 'delete_wishlist' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value={{item.product.id}} name="product_id">
+                    <button class="btn_3">remove</button> 
+                  </form>
+                </td>
+               
+              </tr>
+              {%endfor%}
+              </div>
+            </tbody>
+          </table>
+          <div class="checkout_btn_inner float-right">
+            <a class="btn_1" href="{% url 'product_page' %}">Continue Shopping</a>
+          </div>
+        </div>
+      </div>
+  </section>
+{%endblock%}

@@ -1,0 +1,106 @@
+{%extends 'user_view/base.html'%}
+{%load static%}
+{%block content%}
+<!-- breadcrumb part start-->
+<section class="breadcrumb_part single_product_breadcrumb" style="background-color: #b08ead69">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb_iner">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+<!-- breadcrumb part end -->
+
+<!--================Single Product Area =================-->
+<div class="product_image_area" style="margin-top: -400px;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="product_img_slide owl-carousel">
+          <div class="single_product_img">
+            <img src="{{product.image.url}}" alt="#" class="img-fluid">
+          </div>
+          <div class="single_product_img">
+            <img src="{{product.image.url}}" alt="#" class="img-fluid">
+          </div>
+          <div class="single_product_img">
+            <img src="{{product.image.url}}" alt="#" class="img-fluid">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="single_product_text text-center" style="margin: 0px 0 200px !important">
+          <h3>{{product.product_name}}</h3>
+          <p>
+            {{product.description}}
+          </p>
+          <h6>
+            Color: {{ product.color_name }}
+          </h6>
+          {% comment %} {% if product.color_name and product.color_name.color_name != 'plain' %} {% endcomment %}
+          <div class="card_area">
+            <div class="single_sedebar">
+              <div class="select_option">
+                <div class="select_option_list">Select Color <i class="right fas fa-caret-down"></i> </div>
+                <div class="select_option_dropdown">
+                  {%for i in color%}
+                  <p style="margin-top: 0px;"><a href="{% url 'product_colors' product_id=product.id color_name=i.color_name %}">{{i.color_name}}</a></p>
+                  {%endfor%}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% comment %} {% endif %} {% endcomment %}
+            {% comment %} <div class="product_count_area">
+              <p>Quantity</p>
+              <div class="product_count d-inline-block">
+                <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
+                <input class="product_count_item input-number" type="text" value="1" min="1" max="10">
+                <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
+              </div>
+              <p>$5</p>
+            </div> {% endcomment %}
+            <div class="add_to_cart" style="margin-top: 25px; margin-left: 39px">
+              <form action="{% url 'addTocart' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" value={{product.id}} name="product_id">
+                <button class="btn_3">add to cart</button> 
+              </form>
+              <form action="{% url 'add-to-wishlist' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" value={{product.id}} name="product_id">
+                <button class="btn_3 mt-2" >Add Wishlist</button> 
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--================End Single Product Area =================-->
+<!-- subscribe part here -->
+<section class="subscribe_part section_padding">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="subscribe_part_content">
+          <h2>Get promotions & updates!</h2>
+          <p>Seamlessly empower fully researched growth strategies and interoperable internal or “organic” sources
+            credibly innovate granular internal .</p>
+          <div class="subscribe_form">
+            <input type="email" placeholder="Enter your mail">
+            <a href="#" class="btn_1">Subscribe</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%endblock%}

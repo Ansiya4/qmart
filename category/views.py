@@ -21,7 +21,7 @@ def add_category(request):
     
         new_category =Category(category_name=category_name, description=description,category_image=category_image)
         new_category.save()
-        # print(new_category.id,"aaaaaaaaaaaaa")
+        print(new_category,"bbbbbbbbbbb")
         messages.success(request, 'Category added successfully.')
         return redirect('dashboard')
 

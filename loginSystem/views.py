@@ -55,7 +55,10 @@ def home(request):
     else:
         user = None
     print(user)
-    new_ad=main_ad.objects.get(id=1)
+    try:
+        new_ad=main_ad.objects.get(id=1)
+    except:
+        new_ad=None
     context = {
         'ads':new_ad,
         'user':user

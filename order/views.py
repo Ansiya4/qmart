@@ -17,6 +17,8 @@ from coupon.models import Coupon
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def razerpaycheck(request):
     user_id = request.session.get('user_id')
     coupon_id = request.GET.get('coupon_id')
@@ -40,7 +42,7 @@ def razerpaycheck(request):
     return JsonResponse({
         'total_price': total_price
     })
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def success(request):
     if request.method == 'POST':
         user_id = request.POST.get('user_id')

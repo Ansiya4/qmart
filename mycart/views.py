@@ -17,10 +17,10 @@ from django.contrib.sessions.backends.db import SessionStore
 
 # Create your views here.
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)     
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)   
+@login_required  
 def cart_view(request):
     user_id = request.session.get('user_id')
-    print(user_id,"aaaaaaaaaaaaaaa")
     if user_id:
         user = Account.objects.get(id=user_id)
     else:

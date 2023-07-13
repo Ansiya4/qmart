@@ -94,23 +94,42 @@ def add_product(request):
             image=request.FILES.get('image')
             color_id = request.POST.get('color_name')
             color_name = get_object_or_404(ColorVariation, id=color_id)
+            if not image:
+                messages.info(request," image field canot be empty")
+                return redirect('add_product')
+            if not product_name:
+                messages.info(request," product_name field canot be empty") 
+            if not category:
+                messages.info(request," category field canot be empty")
+                return redirect('add_product')
+            if not description:
+                messages.info(request," description field canot be empty")
+                return redirect('add_product')
+            if not price:
+                messages.info(request," price field canot be empty")
+                return redirect('add_product')
+            if not color_id:
+                messages.info(request," color_id field canot be empty")
+                return redirect('add_product')
             existing_product = Product.objects.filter(product_name=product_name, color_name=color_name).first()
             if existing_product:
                 messages.info(request, f"{product_name} with {color_name} already exist")
             else:
                 new_product =Product(product_name=product_name,description=description,price=price,product_qnty=product_qnty,image=image,category=category,color_name=color_name)
                 new_product.save()
-            check = [product_name,category_id,description,price,product_qnty,color_name]
-            for values in check:
-                if values == '':
-                    messages.info(request,'some fields are empty')
-                    return redirect('add_product')
-                else:
-                    pass
-                    return redirect('display_product')
+
+            # check = [product_name,category_id,description,price,product_qnty,color_name]
+            # print("\n\n..................... add product")
+            # for values in check:
+            #     if values == '':
+            #         messages.info(request,'some fields are empty')
+            #         print("\n\n\n\nsome fields are empty..................... add product")
+            #         return redirect('add_product')
+
         except Exception as e:
-            print("exception occured",str(e))
-            pass
+            print("exception occurred:", str(e))
+            messages.info(request,str(e))
+            
     return redirect('display_product')
     # return render(request,'dashboard_view/product_manager.html')
 # def add_product(request):
@@ -145,15 +164,21 @@ def edit_product(request, product_id):
                     raise Http404("ColorVariation does not exist")
             else:
                 color_name = None
-            # check = [product_name,category_id,description,price,product_qnty,color_name]
-            # for values in check:
-            #     if values == '':
-            #         messages.info(request,'some fields are empty')
-            #         return redirect('add_product')
-            #     else:
-            #         pass
-            #         return redirect('display_product')
-            # Update the product fields
+            if not product_name:
+                messages.info(request," product_name field canot be empty") 
+            if not category:
+                messages.info(request," category field canot be empty")
+                return redirect('add_product')
+            if not description:
+                messages.info(request," description field canot be empty")
+                return redirect('add_product')
+            if not price:
+                messages.info(request," price field canot be empty")
+                return redirect('add_product')
+            if not color_id:
+                messages.info(request," color_id field canot be empty")
+                return redirect('add_product')
+             
             product.product_name = product_name
             product.category = category
             product.description = description

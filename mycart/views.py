@@ -158,7 +158,7 @@ def checkout_cart(request):
                 else:
                     cart_items = []
                     total = 0
-                user_address = adress.objects.filter(user=user)
+                user_address = adress.objects.filter(user=user,is_shipping = True)
                 context = {
                     'user' :user,
                     'cart' :cart_items,
@@ -189,7 +189,7 @@ def checkout_cart(request):
         else:
             cart_items = []
             total = 0
-        user_address = adress.objects.filter(user=user)
+        user_address = adress.objects.filter(user=user,is_shipping = True)
         context = {
             'user' :user,
             'cart' :cart_items,

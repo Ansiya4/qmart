@@ -25,10 +25,11 @@ def add_coupon(request):
             coupon.save()
             return redirect('coupon_management')
         else:
-            print(couponform.errors,"..................error")
+            for field, errors in couponform.errors.items():
+                for error in errors:
+                    messages.error(request, f'Error in {field}: {error}')
     else:
         couponform = CouponForm()
-    
     return redirect('coupon_management')
 
 
@@ -37,7 +38,6 @@ def edit_coupon(request, coupon_id):
         coupon =Coupon.objects.get(id=coupon_id)
     except:
         coupon=None
-
     if request.method == 'POST':
         form = CouponForm(request.POST, instance=coupon)
         if form.is_valid():
@@ -45,7 +45,6 @@ def edit_coupon(request, coupon_id):
             return redirect('coupon_management')
     else:
         form = CouponForm(instance=coupon)
-
     return render(request, 'edit_coupon.html', {'form': form, 'coupon': coupon})
 
 def coupon_management(request):
@@ -54,7 +53,6 @@ def coupon_management(request):
         'coupon': list_coupon
     }
     return render(request,'coupon-management.html',context)
-
 
 def apply_coupon(request,coupon=None):
     user_id = request.session.get('user_id')

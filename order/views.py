@@ -186,6 +186,7 @@ def view_order(request):
         user = Account.objects.get(id=user_id)
     else:
         user = None
+    # active_address = adress.objects.filter(customer=user)
     view_order=Order.objects.filter(customer=user)
     order_ids = [order.id for order in view_order]
     my_order = Ordered_Product.objects.filter(order_id__in=order_ids)

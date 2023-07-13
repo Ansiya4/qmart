@@ -56,7 +56,7 @@ def home(request):
         user = None
     print(user)
     try:
-        new_ad=main_ad.objects.get(id=1)
+        new_ad=main_ad.objects.first()
     except:
         new_ad=None
     context = {
@@ -298,8 +298,6 @@ def register(request):
                 return render(request,'user_view/register.html',context)
     else:
         return render(request,'user_view/register.html')
-    
-
 
 def forgetpassword(request):
     if request.method == 'POST':
@@ -317,7 +315,6 @@ def forgetpassword(request):
             else:
                 messages.warning(request,f'You Entered a wrong OTP')
                 return render(request, 'user_view/forgetpassword.html',{'otp':True,'usr':usr})
-            
         # User rigistration validation
         else:
             email = request.POST.get('email')
@@ -341,7 +338,6 @@ def forgetpassword(request):
                 return redirect('forgot_password')
     return render(request, 'user_view/forgetpassword.html')
 
-
 from django.core.exceptions import ValidationError
 
 def ValidatePassword(password):
@@ -351,7 +347,6 @@ def ValidatePassword(password):
         return True
     except ValidationError:
         return False
-
     
 def resetpassword(request):
     user_id = request.session.get('user_id')
@@ -380,7 +375,7 @@ def resetpassword(request):
             user.set_password(password)
             user.save()
             messages.success(request, 'Password reset succesfull')
-            return redirect('login_view')
+            return redirect('home')
         else:
             messages.error(request, 'Password doesnot match')
             return redirect('resetpassword')

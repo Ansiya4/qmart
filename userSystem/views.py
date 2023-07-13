@@ -90,10 +90,14 @@ def user_profile(request):
 def edit_profile(request):
     user = request.user
     if request.method == 'POST':
-        account_form = AccountForm(request.POST, instance=user)
+        account_form = AccountForm(request.POST, request.FILES, instance=user)
         if account_form.is_valid():
             account_form.save()
             return redirect('user_profile')
+        else:
+            for field, errors in account_form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
     context={
         'user': user,
     }
@@ -133,7 +137,7 @@ def add_address(request):
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-# USER MY ADDRESS
+# USER VIE MY ADDRESS 
 def address_manager(request):
     user_id = request.session.get('user_id')
     if user_id:
@@ -141,19 +145,25 @@ def address_manager(request):
     else:
         user = None
     try: 
-        my_address =adress.objects.filter(user=user)
+        my_address =adress.objects.filter(user=user,is_shipping = True)
     except:
         my_address=None
     context={
         'user': user,
-        'address': my_address
+        'address': my_address,
     }
     return render(request,'address.html',context)
 
 # USER DELETE ADDRESS
 def delete_address(request,adr_id):
-    my_address =adress.objects.filter(id=adr_id)
-    my_address.delete()
+    # my_address =adress.objects.filter(id=adr_id)
+    my_address = get_object_or_404(adress, id=adr_id)
+    print("acount form >>>>>>>>>>>>",my_address)
+    my_address.is_active=False
+    my_address.is_shipping=False
+    my_address.save()
+    # my_address.delete()
+    print(my_address,"...........>>>>>>>>>")
     return redirect('address_manager')
 
 # USER EDIT ADDRESS

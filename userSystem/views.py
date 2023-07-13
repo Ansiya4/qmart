@@ -73,7 +73,7 @@ def user_profile(request):
         user = Account.objects.get(id=user_id)
     else:
         user = None
-    # print(user)
+    
     try:
         user_address = adress.objects.filter(user=user,is_active=True)
     except:

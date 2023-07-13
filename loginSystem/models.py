@@ -43,11 +43,11 @@ class Account(AbstractBaseUser):
     
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    username = models.CharField(max_length=50, unique=True)
+    username = models.CharField(max_length=50, unique=False)
     email = models.EmailField(max_length=100, unique=True)
     phone_number = models.CharField(max_length=50)
     wallet =models.IntegerField(null=True,blank=True,default=None)
-    user_image = models.ImageField(upload_to='photos/profile', blank=True, null=True)
+    user_image = models.ImageField(upload_to='photos/profile', blank=True, null=True,default=None)
     
     # required
     date_joined = models.DateTimeField(auto_now_add=True)

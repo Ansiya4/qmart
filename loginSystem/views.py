@@ -49,7 +49,6 @@ def dashboard(request):
 
 def home(request):
     user_id = request.session.get('user_id')
-    print(user_id,"aaaaaaaaaaaaaaa")
     if user_id:
         user = Account.objects.get(id=user_id)
     else:
@@ -76,9 +75,6 @@ def login_view(request):
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
-        # auth_backend = CustomAuthenticationBackend()
-        # user =auth_backend.authenticate(request,email=email,password=password)
-        print(user,"......user in login view\n\n\n")
         if email == '':
             messages.info(request,'email required')
             return redirect(login_view)
@@ -100,13 +96,7 @@ def login_view(request):
                 return redirect('dashboard')
             else:
                 if user.is_active:
-                    # login(request,user,backend='loginSystem.backends.CustomAuthenticationBackend')
                     login(request,user)
-                    if user.is_authenticated:
-                        print(user,"......user.is_authenticated \n\n\n")
-                        print(request.user,"..................user in login view\n\n")
-                    else:
-                        print(user,"......user is not authenticated \n\n\n")
                     return redirect('home')  
                 else:
                      messages.info(request,"Your account is temporarily blocked, Please try later")
@@ -124,8 +114,6 @@ def logout_site(request):
     return redirect('home')   
 
 def create_account(request):
-    print("User is authenticated:", request.user.is_authenticated)
-    print(request.user,"create_account")
     return render(request,'user_view/register.html')
 
 def validateEmail( email ):
@@ -157,9 +145,6 @@ def validate_name(value):
 # Create your views here.
 
 def register(request):
-
-    """ OTP VERIFICATION """
-
     if request.method=='POST':
         get_otp=request.POST.get('otp')
         if get_otp:
@@ -220,7 +205,6 @@ def register(request):
                 return render(request,'user_view/register.html',context)
             else:
                 pass
-
             result = validateEmail(email)
             if result is False:
                 context ={
@@ -253,7 +237,6 @@ def register(request):
             else:
                 pass
             if password1 == password2:
-          
                 try:
                     Account.objects.get(email=email)
                 except:
@@ -360,18 +343,12 @@ def resetpassword(request):
         if password == confirm_password:
             # user = request.POST.get('fjkha67UTAnh?"}[njkGTFCXD#A@!21^^*87ghjuguy67')
             Pass = ValidatePassword(password)
-           
             if Pass is False:
                 messages.success(request, 'Enter Strong password')
-                message = 'Enter Strong password'
                 return redirect('resetpassword')
             if user is None:
                 email = request.POST.get('email')
                 user = Account.objects.get(email=email)
-                print(email,'daxooodsfsdfsdf')
-            print("\n\n\n")
-            print(user,'user in reset password..............................\n\n\n')
-            print(password,'daxoooooooooooooooo')
             user.set_password(password)
             user.save()
             messages.success(request, 'Password reset succesfull')

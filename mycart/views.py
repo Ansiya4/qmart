@@ -53,7 +53,7 @@ def cart_view(request):
 
 from django.contrib.auth.models import AnonymousUser
 
-
+@login_required
 def addTocart(request):
     product_id = request.POST['product_id']
     product = get_object_or_404(Product, pk=product_id)

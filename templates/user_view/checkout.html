@@ -314,8 +314,10 @@
     var phone_number= $("[name='phone_number']").val();
     var address= $("[name='address']:checked").val();
     var selector= $("[name='selector']").val();
+   
+      
     console.log(selector,'daxo')
-   if(name_of_person == "" || phone_number == "" ||address == "")
+   if(name_of_person == "" || phone_number == "" || typeof address === "undefined")
     {
       alert("All fields are mandatory")
       return false
@@ -332,7 +334,7 @@
         method:"GET",
         url:"/order/proceed-to-pay/",
         data:{
-          "coupon_id":couponId
+          "coupon_id":couponId,
         },
         success:function (response){
         var options = {

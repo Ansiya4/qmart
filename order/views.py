@@ -20,6 +20,7 @@ from django.contrib.auth.decorators import login_required
 def razerpaycheck(request):
     user_id = request.session.get('user_id')
     coupon_id = request.GET.get('coupon_id')
+
     if user_id:
         user = Account.objects.get(id=user_id)
     else:
@@ -47,6 +48,7 @@ def success(request):
         name_of_person = request.POST.get('name_of_person')
         address_id = request.POST.get('address_id')
         coupon_id = request.POST.get('coupon_id')
+
         if user_id:
             user = Account.objects.get(id=user_id)
         else:

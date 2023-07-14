@@ -124,7 +124,7 @@ def add_product(request):
             if not color_id:
                 messages.info(request," color_id field canot be empty")
                 return redirect('add_product')
-            existing_product = Product.objects.filter(product_name=product_name, color_name=color_name).first()
+            existing_product = Product.objects.filter(product_name=product_name, color_name=color_name,category=category).first()
             if existing_product:
                 messages.info(request, f"{product_name} with {color_name} already exist")
             else:

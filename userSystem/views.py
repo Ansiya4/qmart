@@ -66,7 +66,7 @@ def product_page(request, category_slug = None):
         'category':categories,
     }
     return render(request,'user_view/product.html',context)
-
+@login_required
 def user_profile(request):
     user_id = request.session.get('user_id')
     if user_id:
@@ -83,7 +83,6 @@ def user_profile(request):
         'address':user_address,
     }
     return render(request,'user_view/profile.html',context)
-
 
 # USER EDIT PROFILE
 @login_required

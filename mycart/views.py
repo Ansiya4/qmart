@@ -117,6 +117,7 @@ def delete_cart(request,product_id):
     CartItem.objects.get(cart=cart,product=product).delete()
     return redirect('cart_view')
 @login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def checkout_cart(request):
     user_id = request.session.get('user_id')
     if user_id:
@@ -154,7 +155,8 @@ def checkout_cart(request):
                             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
                     else:
                         messages.info(request,"Cart is Empty")
-                        return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+                        return redirect('home')
+                        # return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
                 else:
                     cart_items = []
                     total = 0
@@ -185,7 +187,7 @@ def checkout_cart(request):
                 grand_total=total+shipping_rate+tax
             else:
                 messages.info(request,"Cart is Empty")
-                return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+                return redirect('home')
         else:
             cart_items = []
             total = 0

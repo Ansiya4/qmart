@@ -20,37 +20,42 @@
       color: #333;
     }
   </style>
+  
   <div class="container" style=" padding-top: 20px;background-color: rgba(218, 164, 214, 0.306);">
 
 
     <div class="billing_details" style="margin: 40px;">
+      <h1>Edit</h1>
       <div class="row">
         <div class="col-lg-12">
 
           <form class="row contact_form" action="{% url 'edit_profile'%}" enctype="multipart/form-data" method="post" novalidate="novalidate">
             {% csrf_token %}
             <div class="col-md-6 form-group p_star">
+              <p>First name:</p>
               <input type="text" class="form-control" id="first" name="first_name" value="{{user.first_name}}"
-                placeholder="First name" />
+                placeholder="First name: {{user.first_name}}" />
               <!-- <span class="placeholder" ></span> -->
             </div>
 
             <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="last" name="last_name" placeholder="Last name" />
+              <p>Last name:</p>
+              <input type="text" class="form-control" id="last" name="last_name" value="{{user.last_name}}" placeholder="Last name: {{user.last_name}}" />
 
             </div>
 
             <div class="col-md-12 form-group">
-              <input type="text" class="form-control" id="username" name="username" placeholder="Username" />
+              <p>Username:</p>
+              <input type="text" class="form-control" id="username" name="username" value="{{user.username}}" placeholder="Username: {{user.username}}" />
             </div>
 
             <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="number" name="phone_number" placeholder="Mobile number:" />
-
+              <p>Mobile:</p>
+              <input type="number" class="form-control" id="number" name="phone_number" value="{{user.phone_number}}" />
             </div>
 
             <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="email" name="email" placeholder="{{user.email}}" readonly />
+              <input type="text" class="form-control" id="email" name="email" placeholder="Email: {{user.email}}" readonly />
 
             </div>
             <div class="col-md-6 form-group p_star">
@@ -59,6 +64,7 @@
             </div>
             <div class="col-md-12 form-group">
               <button type="submit" class="genric-btn primary-border radius">Update</button>
+              <a type="button" href="{% url 'user_profile'%}" class="genric-btn primary-border radius">close</a>
             </div>
 
           </form>
@@ -66,9 +72,9 @@
 
 
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          {% comment %} <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Add Address
-          </button>
+          </button> {% endcomment %}
 
           <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"

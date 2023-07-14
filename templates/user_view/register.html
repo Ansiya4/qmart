@@ -90,10 +90,10 @@
                                         <input type="text" class="form-control"  name="name" value="{{pre_name}}"
                                             placeholder="Username">
                                     </div>
-                                    <div class="col-md-6 form-group p_star mt-4">
+                                    {% comment %} <div class="col-md-6 form-group p_star mt-4">
                                         <input  name='mobile' value="{{pre_mobile}}" type="text" id="mobile-field" class="form-control form-control-lg " style = "font-size:17px;" placeholder="Mobile No">
 
-                                    </div>
+                                    </div> {% endcomment %}
                                     {% if messages %}
                                       {% for message in messages %}
                                         <div class="text-center text-danger">

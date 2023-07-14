@@ -15,7 +15,7 @@ def search(request):
         keyword = request.GET['keyword'] 
         products_list = None
         if keyword:
-            products_list= Product.objects.order_by('created_date').filter(Q(description__icontains=keyword)|Q(product_name__icontains=keyword))
+            products_list= Product.objects.order_by('created_date').filter(Q(description__icontains=keyword)|Q(product_name__icontains=keyword)|Q(category__category_name__icontains=keyword))
     context ={
         'products_list': products_list, 
     }

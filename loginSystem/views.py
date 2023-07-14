@@ -168,7 +168,7 @@ def register(request):
             lastname = request.POST['lastname']  
             name = request.POST['name']
             email = request.POST['email']
-            phone_number = request.POST['mobile']
+            # phone_number = request.POST['mobile']
             password1 = request.POST['password1']
             password2 = request.POST['password2']
             
@@ -181,7 +181,6 @@ def register(request):
                         'pre_lastname' :lastname,
                         'pre_name':name,
                         'pre_email':email,
-                        'pre_mobile':phone_number,
                         'pre_password1':password1,
                         'pre_password2':password2,
                     }
@@ -197,7 +196,6 @@ def register(request):
                         'pre_lastname' :lastname,
                         'pre_name':name,
                         'pre_email':email,
-                        'pre_mobile':phone_number,
                         'pre_password1':password1,
                         'pre_password2':password2,
                     }
@@ -345,14 +343,18 @@ def resetpassword(request):
             Pass = ValidatePassword(password)
             if Pass is False:
                 messages.success(request, 'Enter Strong password')
+                
                 return redirect('resetpassword')
             if user is None:
                 email = request.POST.get('email')
-                user = Account.objects.get(email=email)
+                try:
+                    user = Account.objects.get(email=email)
+                except:
+                    return redirect('home')
             user.set_password(password)
             user.save()
             messages.success(request, 'Password reset succesfull')
-            return redirect('home')
+            return redirect('user_profile')
         else:
             messages.error(request, 'Password doesnot match')
             return redirect('resetpassword')

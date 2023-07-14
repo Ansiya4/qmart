@@ -9,6 +9,7 @@ urlpatterns = [
     path('product/search',views.search,name='search'),
     path('product-details/<int:product_id>',views.product_details,name='product_details'),
     path('product-colors/<int:product_id>/<str:color_name>/',views.product_colors,name='product_colors'),
+    path('add-color/',views.add_color,name='add_color'),
     # path('category_manager/',views.category_manager,name='category_manager'),
 ]    
     

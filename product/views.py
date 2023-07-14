@@ -80,7 +80,20 @@ def delete(request,product_id):
     prod = Product.objects.get(id=product_id)
     prod.delete()
     return redirect('display_product')
+def add_color(request):
+    if request.method == "POST":
+        try:
+            color_name = request.POST.get('color_name')
+        except Exception as e:
+            print("exception occurred:", str(e))
+            messages.info(request,str(e))
 
+        if ColorVariation.objects.filter(color_name=color_name).exists():
+                messages.info(request, f"{color_name} already exist")
+        else:
+            new_color = ColorVariation(color_name=color_name)
+            new_color.save()
+    return redirect('display_product')
 # ADMIN ADD A PRODUCT
 def add_product(request):
     if request.method == "POST":

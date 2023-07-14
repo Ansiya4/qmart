@@ -46,7 +46,7 @@ def product_page(request, category_slug = None):
        ('200-400', 200, 400),
        ('400-600', 400, 600),
        ('600-800', 600, 800),
-       ('800+', 800, 0),
+       ('800+', 800, 1000),
     ]
     # Create default price range instances if they don't exist
     for label, min_price, max_price in default_ranges:
@@ -117,8 +117,6 @@ def add_address(request):
         if my_address is None:
             my_address=adress(user = user, is_active = True,is_shipping=True)
             address_form = adressForm(request.POST, instance=my_address)
-            # print("acount form >>>>>>>>>>>>",address_form.is_valid())
-            # print("acount form >>>>>>>>>>>>",address_form.errors)
             if address_form.is_valid():
                 address = address_form.save(commit=False)
                 address.user =user
@@ -157,12 +155,9 @@ def address_manager(request):
 def delete_address(request,adr_id):
     # my_address =adress.objects.filter(id=adr_id)
     my_address = get_object_or_404(adress, id=adr_id)
-    print("acount form >>>>>>>>>>>>",my_address)
     my_address.is_active=False
     my_address.is_shipping=False
     my_address.save()
-    # my_address.delete()
-    print(my_address,"...........>>>>>>>>>")
     return redirect('address_manager')
 
 # USER EDIT ADDRESS
@@ -175,13 +170,10 @@ def edit_address(request):
     my_address = None
     if request.method == 'POST':
         address_id = request.POST.get('id')
-        print(address_id,"..................adress_id")
         try:
             my_address =adress.objects.get(id = address_id)
         except ObjectDoesNotExist:
             my_address= None
-        print(my_address,"..................adress_id")
-   
         if my_address:
             address_form = adressForm(request.POST, instance=my_address)
             if address_form.is_valid():
